@@ -1,0 +1,11 @@
+﻿<h1>Forbidden</h1>
+
+@if (User.IsInRole("Administrator"))
+{
+    <h4>You are admin</h4>
+}
+
+@if (User.IsInRole("Pleb"))
+{
+    <h4>You are a pleb, sorry.</h4>
+}

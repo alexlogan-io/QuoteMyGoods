@@ -1,0 +1,68 @@
+﻿@{ 
+    var itemsPerPage = ViewBag.itemsPerPage;
+    var productCount = ViewBag.productCount;
+
+    var lim = productCount / itemsPerPage;
+    var mod = productCount % itemsPerPage;
+
+    if (mod != 0)
+    {
+        lim += 1;
+
+    }
+
+    var currentPage = ViewBag.pageNumber;
+    var prevPage = currentPage - 1;
+    var nextPage = currentPage + 1;
+}
+
+<div class="col-md-2 col-md-offset-5">
+    @if (lim > 1)
+    {
+    <nav>
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li>
+                    <a asp-action="Products" asp-route-orderbyList="@Context.Request.Query["orderByList"]"
+                       asp-route-categoryList="@Context.Request.Query["categoryList"]" asp-route-pageNumber="@prevPage" asp-route-itemsPerPage="@Context.Request.Query["itemsPerPage"]"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= lim; i++)
+            {
+                @if (i == currentPage)
+                {
+                    <li class="active">
+                        <a asp-action="Products" asp-route-orderbyList="@Context.Request.Query["orderByList"]"
+                           asp-route-categoryList="@Context.Request.Query["categoryList"]" asp-route-pageNumber="@i" asp-route-itemsPerPage="@Context.Request.Query["itemsPerPage"]">@i</a>
+                    </li>
+
+                }
+                else
+                {
+                    <li>
+                        <a asp-action="Products" asp-route-orderbyList="@Context.Request.Query["orderByList"]"
+                           asp-route-categoryList="@Context.Request.Query["categoryList"]" asp-route-pageNumber="@i" asp-route-itemsPerPage="@Context.Request.Query["itemsPerPage"]">@i</a>
+                    </li>
+                }
+            }
+
+            @if (currentPage < lim)
+            {
+                <li>
+                    <a asp-action="Products" asp-route-orderbyList="@Context.Request.Query["orderByList"]"
+                       asp-route-categoryList="@Context.Request.Query["categoryList"]" asp-route-pageNumber="@nextPage" asp-route-itemsPerPage="@Context.Request.Query["itemsPerPage"]"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+    }
+</div>

@@ -1,0 +1,30 @@
+﻿@using System.Security.Claims;
+
+@{ 
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+
+    <div class="col-md-10 col-md-offset-1">
+        <h1>Welcome to Quote My Goods</h1>
+        <p>This app will allow you to view a list of products</p>
+        <a asp-controller="Products" asp-action="Products" class="btn btn-lg btn-success">View Products</a>
+
+    </div>
+</div>
+
+<h1>
+    Hello @User.Identity.Name
+
+        
+</h1>
+
+@if (User.IsInRole("Administrator"))
+{
+    <h4>You are admin</h4>
+}
+
+@if (User.IsInRole("Pleb"))
+{
+    <h4>You are a pleb, sorry.</h4>
+}

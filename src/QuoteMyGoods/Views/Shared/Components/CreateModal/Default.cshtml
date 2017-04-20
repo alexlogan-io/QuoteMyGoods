@@ -1,0 +1,111 @@
+﻿@model QuoteMyGoods.Models.Product
+
+<div id="createModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div id="createContent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create product</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Create new product</h5>
+
+                <div class="form-horizontal">
+                    <h4>Product</h4>
+                    <div class="form-group">
+                        <label asp-for="Name" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="Category" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="Description" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="Price" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImgUrl" class="col-md-2 control-label"></label>
+                        <div class="col-md-6">
+                            <input asp-for="ImgUrl" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="createSuccess" class="alert alert-success" role="alert" style="display: none;">Product created!</div>
+            <div id="createFailed" class="alert alert-danger" role="alert" style="display: none;">Failed to create product</div>
+
+            <div class="modal-footer">
+                <button type="submit" id="CreateButton" class="btn btn-success">Create</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var createSuccess = $("#createSuccess");
+        var createFailed = $("#createFailed");
+
+        $("#CreateButton").click(function () {
+
+            $(this).attr("disabled", true);
+
+            $("#createFailed").hide();
+
+            var postDetails = {
+                name: $("#Name").val(),
+                category: $("#Category").val(),
+                description: $("#Description").val(),
+                price: $("#Price").val(),
+                imgUrl: $("#ImgUrl").val()
+            };
+
+            console.log(postDetails);
+
+            $.ajax({
+                method: "POST",
+                url: "/api/products",
+                data: JSON.stringify(postDetails),
+                contentType: "application/json"
+            }).done(function (res) {
+                console.log(res);
+                $(createSuccess).show();
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            }).fail(function () {
+                $(createFailed).show();
+            });
+
+            $(this).removeAttr("disabled");
+        });
+
+        $("#createModal").on("hidden.bs.modal", function () {
+            console.log("modal hidden");
+            $("#Name").val("");
+            $("#Category").val("");
+            $("#Description").val("");
+            $("#Price").val("");
+            $("#ImgUrl").val("");
+            $(createSuccess).hide();
+            $(createFailed).hide();
+        });
+    });
+</script>

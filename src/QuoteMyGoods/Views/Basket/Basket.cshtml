@@ -1,0 +1,75 @@
+﻿@model IDictionary<int, QuoteMyGoods.Common.BasketItem>
+
+@{
+    ViewBag.Title = "Basket";
+}
+
+<div class="col-md-8 col-md-offset-2">
+    @if (ViewBag.TotalPrice == 0)
+    {
+        <div class="well">
+            Your basket is empty!
+        </div>
+        <div class="col-md-1">
+            <form asp-controller="Basket" asp-action="SaveBasket" method="post">
+                <button type="submit" class="btn btn-danger">Save basket</button>
+            </form>
+        </div>
+        <div class="col-md-1">
+            <form asp-controller="Basket" asp-action="LoadBasket" method="post">
+                <button type="submit" class="btn btn-danger">Load basket</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-3 text-left">
+                Name
+            </div>
+            <div class="col-md-3 text-left">
+                Category
+            </div>
+            <div class="col-md-2 text-left">
+                Price
+            </div>
+            <div class="col-md-2 text-left">
+                Quantity
+            </div>
+            <div class="col-md-2 text-left">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            @foreach (var item in Model.Values)
+            {
+                <div>@await Component.InvokeAsync("BasketItem", new { basketItem = item })</div>
+            }
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <a asp-controller="Products" asp-action="Products">Go back to products page.</a>
+            </div>
+            <div class="col-md-3 col-md-offset-5">
+                Total price:£@ViewBag.TotalPrice
+                <button class="btn btn-success">Checkout</button>
+            </div>
+            <div class="col-md-1">
+                <form asp-controller="Basket" asp-action="ClearBasket" method="post">
+                    <button type="submit" class="btn btn-danger">Clear basket</button>
+                </form>
+            </div>
+            <div class="col-md-1">
+                <form asp-controller="Basket" asp-action="SaveBasket" method="post">
+                    <button type="submit" class="btn btn-danger">Save basket</button>
+                </form>
+            </div>
+            <div class="col-md-1">
+                <form asp-controller="Basket" asp-action="LoadBasket" method="post">
+                    <button type="submit" class="btn btn-danger">Load basket</button>
+                </form>
+            </div>
+        </div>
+    }
+    </div>

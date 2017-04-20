@@ -1,0 +1,13 @@
+﻿@model QuoteMyGoods.Models.Product
+
+<div class="col-md-4">
+    <div class="thumbnail">
+        <a asp-action="Details" asp-route-id="@Model.Id"><img src="@Model.ImgUrl" /></a>
+        <div class="caption">
+            <h3>@Html.DisplayFor(modelItem => Model.Name)</h3>
+            <h4 class="text-muted">@Html.DisplayFor(modelItem => Model.Category)</h4>
+            <p>@Model.Description</p>
+            <h3>£@Model.Price</h3>
+        </div>
+    </div>
+</div>

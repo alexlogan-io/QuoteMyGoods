@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/lib/angular/angular.js"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    @RenderSection("Scripts", false)
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-controller="App" asp-action="Index" class="navbar-brand">Quote My Goods</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-controller="App" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="App" asp-action="About">About</a></li>
+                        <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+                        <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-controller="Auth" asp-action="Login">Login</a></li>
+                            <li><a asp-controller="Auth" asp-action="Signup">Signup</a></li>
+
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-controller="Products" asp-action="Products">Products</a></li>
+                            <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-right">
+                        <li>@await Component.InvokeAsync("BasketCount")</li>
+                    </ul> 
+                </div>
+            </div>
+        </nav>
+        <div id="main" class="container-fluid">
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+        <br />
+        <br />
+        <div id="footer" class="container-fluid">
+            <div class="navbar navbar-inverse navbar-fixed-bottom">
+                <h4 class="text-center text-info">&copy; 2015 Quote My Goods Ltd.</h4>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        $("#hideFilters").on("click", function () {
+            $("#hideFilters i").toggleClass("fa-chevron-down").toggleClass("fa-chevron-up");
+            $("#filters").toggle("slow");
+        });        
+    });
+    </script>
+
+</body>
+</html>

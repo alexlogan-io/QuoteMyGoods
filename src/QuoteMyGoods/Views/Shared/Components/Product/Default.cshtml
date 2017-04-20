@@ -1,0 +1,25 @@
+﻿@model QuoteMyGoods.Models.Product
+
+<div class="col-md-2">
+    <div class="thumbnail">
+        <a asp-action="Details" asp-route-id="@Model.Id"><img src="@Model.ImgUrl" /></a>
+        <div class="caption">
+            <h3>@Html.DisplayFor(modelItem => Model.Name)</h3>
+            <a asp-action="Products" asp-route-categoryList="@Model.Category" class="text-muted">@Html.DisplayFor(modelItem => Model.Category)</a>
+            <p>@Model.Description</p>
+            <h3>£@Model.Price</h3>
+            <p>
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary" role="button">Details</a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" role="button">Delete</a>
+                }
+            </p>
+            <form asp-controller="Basket" asp-action="AddToBasket" asp-route-id="@Model.Id" asp-route-orderbyList="@Context.Request.Query["orderByList"]"
+                  asp-route-categoryList="@Context.Request.Query["categoryList"]" asp-route-pageNumber="@Context.Request.Query["pageNumber"]" asp-route-itemsPerPage="@Context.Request.Query["itemsPerPage"]" method="post">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" class="btn btn-default" value="Add to basket" />
+            </form>
+        </div>
+    </div>
+</div>

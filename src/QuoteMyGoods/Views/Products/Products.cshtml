@@ -1,0 +1,88 @@
+﻿@model IEnumerable<QuoteMyGoods.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+    var itemsPerRow = 6;
+}
+
+<button id="hideFilters" class="btn btn-success"><i class="fa fa-chevron-up"></i></button>
+
+<hr />
+
+<div id="filters">
+    <div class="row">
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="col-md-5">
+                <a asp-action="Create" class="btn btn-primary">Create new</a>
+            </div>
+        }
+        <div class="col-md-5">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createModal">Create with jQuery</button>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <form asp-controller="Products" asp-action="Products" method="get">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="orderbyList">Order by: </label>
+                    @Html.DropDownList("orderbyList", "All")
+                </div>
+                <div class="form-group">
+                    <label for="itemsPerPage">Select Category: </label>
+                    @Html.DropDownList("categoryList", "All")
+                </div>
+                <div class="form-group">
+                    <label>Items per page</label>
+                    <select id="itemsPerPage" name="itemsPerPage">
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                        <option value="18">18</option>
+                        <option value="24">24</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr />
+</div>
+
+<div class="row">
+    @await Component.InvokeAsync("Paging")
+</div>
+
+<div>
+    @{
+        int lim = itemsPerRow;
+    }
+    @for (int i = 0; i < Model.Count(); i += itemsPerRow)
+    {
+        <div class="row row-eq-height">
+            @for (int j = i; j < lim && j < Model.Count(); j++)
+            {
+                @await Component.InvokeAsync("Product", new { product = Model.ElementAt(j) });
+
+            }
+            @{
+                lim+=itemsPerRow;
+            }
+        </div>
+    }
+</div>
+
+<div class="row">
+    @await Component.InvokeAsync("Paging")
+</div>
+
+<div>
+    @await Component.InvokeAsync("CreateModal")
+</div>
+
+
+

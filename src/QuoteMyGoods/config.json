@@ -1,0 +1,23 @@
+﻿{
+  "AppSettings": {
+    "SiteEmailAddress" :  "noalgalex@gmail.com"
+  },
+  "Data": {
+    "QMGContextConnection": "Server=(localdb)\\MSSQLLocalDb;Database=QMGDb;Trusted_Connection=true;MultipleActiveResultSets=true",
+    //"QMGContextConnection": "Server=tcp:qmg.database.windows.net,1433;Database=QMGDB;User ID=alex@qmg;Password=Left4dead2;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+  },
+  "DocumentDB": {
+    "ConnectionUri": "",
+    "PrimaryKey": "",
+    "ConnectionString": ""
+  },
+  "TableStorage": {
+    "ConnectionString": ""
+  },
+  "BlobStorage": {
+    "ConnectionString": ""
+  },
+  "RedisCache": {
+    "ConnectionString": ""
+  }
+}
