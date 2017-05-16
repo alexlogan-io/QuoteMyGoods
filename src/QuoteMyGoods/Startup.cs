@@ -86,6 +86,7 @@ namespace QuoteMyGoods
         public async void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, QMGContextSeedData seeder)
         {
             loggerFactory.AddDebug(LogLevel.Information);
+
             app.UseDeveloperExceptionPage();
 
             app.UseSession();
